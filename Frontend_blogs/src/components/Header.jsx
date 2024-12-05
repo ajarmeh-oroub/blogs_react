@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -58,20 +59,21 @@ export default function Header() {
             <div className="collapse navbar-collapse" id="nextpage_main_menu">
               <ul className="navbar-nav menu-open">
                 <li className="current-menu-item">
-                  <a href="#banner">Home</a>
+                  <Link to='/'>Home </Link>
+                 </li>
+                <li className="current-menu-item">
+                <Link to='/blogdetails'> blog details </Link>
+
                 </li>
                 <li className="current-menu-item">
-                  <a href="#trending">Trending News</a>
+                 <Link to='/favorite'> Favorite </Link>
                 </li>
                 <li className="current-menu-item">
-                  <a href="#latest">Latest News</a>
-                </li>
+                 <Link to='contact'> Contact  </Link>
+                 </li>
                 <li className="current-menu-item">
-                  <a href="#grid">News Grid</a>
-                </li>
-                <li className="current-menu-item">
-                  <a target="_blank" href="https://1.envato.market/5OQX2">
-                    Pro Version
+                  <a target="_blank" href="#">
+                    About us
                   </a>
                 </li>
               </ul>

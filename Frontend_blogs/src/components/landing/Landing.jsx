@@ -10,6 +10,7 @@ export default function Landing() {
     <PostTrending/>
     <PostLatest />
     <PostGrid/>
+    
     </>
   )
 }
