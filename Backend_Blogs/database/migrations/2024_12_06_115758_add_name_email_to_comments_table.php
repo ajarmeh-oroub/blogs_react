@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blogs', function (Blueprint $table) {
-            $table->id();
-            $table->string('image', 255);
-            $table->string('title', 255);
-            $table->longText('article');
-            $table->timestamps();
+        Schema::table('comments', function (Blueprint $table) {
+            $table->string('name')->after('id'); 
+            $table->string('email')->after('name');
         });
     }
 
@@ -25,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('blogs');
+        Schema::table('comments', function (Blueprint $table) {
+            $table->dropColumn(['name', 'email']);
+        });
     }
 };
