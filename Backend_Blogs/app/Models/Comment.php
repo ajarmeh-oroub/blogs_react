@@ -13,5 +13,13 @@ class Comment extends Model
         'userid',
         'blogId',
         'comment',
+        'name', 
+        'email',
     ];
+
+    public function blog()
+{
+    return $this->belongsTo(Blog::class);
+}
+
 }
