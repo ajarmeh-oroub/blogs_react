@@ -10,11 +10,11 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'userid',
-        'blogId',
-        'comment',
-        'name', 
-        'email',
+        'blogId', // يجب أن يكون مطابقًا لاسم الحقل في قاعدة البيانات
+        'comment', // النص الخاص بالتعليق
+        'name',    // اسم المعلق
+        'email',   // البريد الإلكتروني
+          // المستخدم المرتبط بالتعليق
     ];
 
     public function blog()

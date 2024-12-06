@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
+
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -25,10 +27,16 @@ class BlogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function show($id)
+{
+    $blog = Blog::with('user')->find($id);
+
+    if (!$blog) {
+        return response()->json(['message' => 'Blog not found'], 404);
     }
+
+    return response()->json($blog);
+}
 
     /**
      * Update the specified resource in storage.

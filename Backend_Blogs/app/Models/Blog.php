@@ -10,7 +10,23 @@ class Blog extends Model
     use HasFactory;
 
 
-    protected $fillable = ['image', 'title', 'article', 'user_id'];
+    protected $fillable = [
+        'image', 
+        'title', 
+        'article', 
+        'user_id', 
+        'categories', 
+        'likes', 
+        'comments_count', 
+        'short_description', 
+        'published_at'
+    ];
+    
+     
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
     function comments(){
