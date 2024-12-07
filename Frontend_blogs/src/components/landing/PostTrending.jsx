@@ -8,7 +8,7 @@ export default function PostTrending({ trends, latest }) {
         <div className="single-post-wrap">
           <div className="thumb">
             <img src={trend.image} alt="img" style={{height: "245px", width: "100%"}}/>
-            <a className="tag-base tag-light-green">{trend.category_id}</a>
+            <a className="tag-base tag-light-green">{trend.category.name}</a>
           </div>
           <div className="details">
             <div className="post-meta-single mb-3">

@@ -8,10 +8,21 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    function index(){
+    function index()
+    {
 
-        $blogs['latest'] = Blog::latest()->take(13)->get();
+        // $blogs['latest'] = Blog::latest()->take(13)->get();
+        $blogs['latest'] = Blog::with('category')->latest()->take(13)->get();
         $blogs['first'] = $blogs['latest']->first();
+
+        // $blogIds = DB::table('blog_user')
+        //     ->select('blog_id', DB::raw('COUNT(*) as user_count'))
+        //     ->groupBy('blog_id')
+        //     ->orderBy('user_count', 'desc')
+        //     ->take(3)
+        //     ->pluck('blog_id');
+
+        // $blogs['trends'] = Blog::whereIn('id', $blogIds)->get();
 
         $blogIds = DB::table('blog_user')
             ->select('blog_id', DB::raw('COUNT(*) as user_count'))
@@ -20,7 +31,10 @@ class HomeController extends Controller
             ->take(3)
             ->pluck('blog_id');
 
-        $blogs['trends'] = Blog::whereIn('id', $blogIds)->get();
+        $blogs['trends'] = Blog::with('category') // Eager-load the category
+            ->whereIn('id', $blogIds)
+            ->get();
+
 
 
 

@@ -9,7 +9,7 @@ export default function PostGrid({ grid }) {
         <div className="thumb">
           <img src={blog.image} alt="img" style={{height: "266px", width: "100%"}}
           className="img-fluid"/>
-          <a className="tag-base tag-purple" href="#">{blog.category_id}</a>
+          <a className="tag-base tag-purple" href="#">{blog.category.name}</a>
         </div>
         <div className="details">
           <div className="post-meta-single">
