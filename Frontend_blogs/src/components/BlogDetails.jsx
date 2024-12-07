@@ -14,13 +14,13 @@ export default function BlogDetails() {
   useEffect(() => {
     // Fetch blog details
     axios
-      .get(`http://localhost:8000/api/blogs/1`)
+      .get(`http://localhost:8000/api/blogs/${id}`)
       .then((response) => setBlog(response.data))
       .catch((error) => setError(error.message));
 
     // Fetch comments related to the blog
     axios
-      .get(`http://localhost:8000/api/blogs/1/comments`)
+      .get(`http://localhost:8000/api/blogs/${id}/comments`)
       .then((response) => setComments(response.data))
       .catch((error) => setError(error.message));
   }, [id]);
@@ -43,7 +43,7 @@ export default function BlogDetails() {
   
     // Send new comment to the API using Axios
     axios
-      .post("http://localhost:8000/api/blogs/1/comments", payload)
+      .post(`http://localhost:8000/api/blogs/${id}/comments`, payload)
       .then((response) => {
         // Update comments list
         setComments((prev) => [...prev, response.data]);
