@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlogController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
 
@@ -23,3 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/blogs/{id}/comments', [CommentController::class, 'index']);
 Route::get('/blogs/{id}', [BlogController::class, 'show']);
 Route::post('/blogs/{id}/comments', [CommentController::class, 'store']);
+Route::controller(HomeController::class)->name('home.')->group(function (){
+    Route::get('/home', 'index')->name('index');});
