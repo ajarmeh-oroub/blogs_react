@@ -36,4 +36,9 @@ class Blog extends Model
     function users(){
         return $this->belongsToMany(User::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

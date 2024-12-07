@@ -14,13 +14,13 @@ export default function BlogDetails() {
   useEffect(() => {
     // Fetch blog details
     axios
-      .get(`http://localhost:8000/api/blogs/1`)
+      .get(`http://localhost:8000/api/blogs/${id}`)
       .then((response) => setBlog(response.data))
       .catch((error) => setError(error.message));
 
     // Fetch comments related to the blog
     axios
-      .get(`http://localhost:8000/api/blogs/1/comments`)
+      .get(`http://localhost:8000/api/blogs/${id}/comments`)
       .then((response) => setComments(response.data))
       .catch((error) => setError(error.message));
   }, [id]);
@@ -43,7 +43,7 @@ export default function BlogDetails() {
   
     // Send new comment to the API using Axios
     axios
-      .post("http://localhost:8000/api/blogs/1/comments", payload)
+      .post(`http://localhost:8000/api/blogs/${id}/comments`, payload)
       .then((response) => {
         // Update comments list
         setComments((prev) => [...prev, response.data]);
@@ -112,26 +112,7 @@ export default function BlogDetails() {
               <p>{blog.article}</p>
             </div>
 
-            {/* Comments Section */}
-            <div className="comments-area">
-              <h4>{comments.length} Comments</h4>
-              {comments.length === 0 ? (
-                <p>No comments yet. Be the first to comment!</p>
-              ) : (
-                comments.map((comment) => (
-                  <div className="comment-list" key={comment.id}>
-                    <div className="single-comment justify-content-between d-flex">
-                      <div className="user">
-                        <h5>{comment.name}</h5>
-                        <p>{new Date(comment.created_at).toLocaleString()}</p>
-                      </div>
-                      <div className="desc">
-                        <p>{comment.comment}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              )}
+          
 
               {/* Add Comment Form */}
 <div className="comment-form">
@@ -174,6 +155,26 @@ export default function BlogDetails() {
   </form>
 </div>
 
+  {/* Comments Section */}
+  <div className="comments-area">
+              <h4>{comments.length} Comments</h4>
+              {comments.length === 0 ? (
+                <p>No comments yet. Be the first to comment!</p>
+              ) : (
+                comments.map((comment) => (
+                  <div className="comment-list" key={comment.id}>
+                    <div className="single-comment justify-content-between d-flex">
+                      <div className="user">
+                        <h5>{comment.name}</h5>
+                        <p>{new Date(comment.created_at).toLocaleString()}</p>
+                      </div>
+                      <div className="desc">
+                        <p>{comment.comment}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
