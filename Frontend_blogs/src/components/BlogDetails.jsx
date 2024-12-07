@@ -112,26 +112,7 @@ export default function BlogDetails() {
               <p>{blog.article}</p>
             </div>
 
-            {/* Comments Section */}
-            <div className="comments-area">
-              <h4>{comments.length} Comments</h4>
-              {comments.length === 0 ? (
-                <p>No comments yet. Be the first to comment!</p>
-              ) : (
-                comments.map((comment) => (
-                  <div className="comment-list" key={comment.id}>
-                    <div className="single-comment justify-content-between d-flex">
-                      <div className="user">
-                        <h5>{comment.name}</h5>
-                        <p>{new Date(comment.created_at).toLocaleString()}</p>
-                      </div>
-                      <div className="desc">
-                        <p>{comment.comment}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              )}
+          
 
               {/* Add Comment Form */}
 <div className="comment-form">
@@ -174,6 +155,26 @@ export default function BlogDetails() {
   </form>
 </div>
 
+  {/* Comments Section */}
+  <div className="comments-area">
+              <h4>{comments.length} Comments</h4>
+              {comments.length === 0 ? (
+                <p>No comments yet. Be the first to comment!</p>
+              ) : (
+                comments.map((comment) => (
+                  <div className="comment-list" key={comment.id}>
+                    <div className="single-comment justify-content-between d-flex">
+                      <div className="user">
+                        <h5>{comment.name}</h5>
+                        <p>{new Date(comment.created_at).toLocaleString()}</p>
+                      </div>
+                      <div className="desc">
+                        <p>{comment.comment}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
