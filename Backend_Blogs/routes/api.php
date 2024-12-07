@@ -42,3 +42,4 @@ Route::post('/blogs/{id}/comments', [CommentController::class, 'store']);
 Route::controller(HomeController::class)->name('home.')->group(function (){
     Route::get('/home', 'index')->name('index');
 });
+
