@@ -15,7 +15,7 @@ export default function PostGrid({ grid }) {
           <div className="post-meta-single">
             <p>
               <i className="fa fa-clock-o" />
-              {blog.created_at}
+              {(new Date(blog.created_at)).getDay()}.{(new Date(blog.created_at)).getMonth()}.{(new Date(blog.created_at)).getFullYear()}
             </p>
           </div>
           <h6 className="title">

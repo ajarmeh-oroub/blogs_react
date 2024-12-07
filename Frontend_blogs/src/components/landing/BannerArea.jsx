@@ -27,7 +27,7 @@ export default function BannerArea({data, loading, error}) {
                 </li>
                 <li className="date">
                   <i className="fa fa-clock-o" />
-                  {blog.created_at}
+                  {(new Date(blog.created_at)).getDay()}.{(new Date(blog.created_at)).getMonth()}.{(new Date(blog.created_at)).getFullYear()}
                 </li>
               </ul>
             </div>
@@ -60,7 +60,7 @@ export default function BannerArea({data, loading, error}) {
             <ul>
               <li>
                 <i className="fa fa-clock-o" />
-                {blog.created_at}
+                {(new Date(blog.created_at)).getDay()}.{(new Date(blog.created_at)).getMonth()}.{(new Date(blog.created_at)).getFullYear()}
               </li>
             </ul>
           </div>

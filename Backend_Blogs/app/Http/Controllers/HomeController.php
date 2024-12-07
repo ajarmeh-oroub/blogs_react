@@ -17,7 +17,7 @@ class HomeController extends Controller
             ->select('blog_id', DB::raw('COUNT(*) as user_count'))
             ->groupBy('blog_id')
             ->orderBy('user_count', 'desc')
-            ->take(5)
+            ->take(3)
             ->pluck('blog_id');
 
         $blogs['trends'] = Blog::whereIn('id', $blogIds)->get();

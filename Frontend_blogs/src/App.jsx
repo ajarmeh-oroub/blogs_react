@@ -4,7 +4,7 @@ import Contact from './components/Contact'
 import FavoritePage from './components/FavoritePage'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import Landing from './components/landing/landing'
+import Landing from './components/landing/Landing'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 
