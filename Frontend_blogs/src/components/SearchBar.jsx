@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-modal";
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Fetch data from API based on the search term
   useEffect(() => {

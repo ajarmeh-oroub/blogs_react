@@ -24,8 +24,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/blogs/{id}/comments', [CommentController::class, 'index']);
 Route::get('/blogs/{id}', [BlogController::class, 'show']);
 Route::get('/search', [BlogController::class, 'search']);
+Route::get('/user/{userId}/favorites', [BlogController::class, 'getFavoriteBlogs']);
 Route::post('/blogs/{id}/comments', [CommentController::class, 'store']);
 
 Route::controller(HomeController::class)->name('home.')->group(function (){
     Route::get('/home', 'index')->name('index');
 });
+
+Route::post('/favorites/{userId}/{blogId}', [BlogController::class, 'addToFavorite']);
+Route::delete('/favorites/{userId}/{blogId}', [BlogController::class, 'removeFromFavorite']);
+Route::get('/favorites/{userId}/{blogId}', [BlogController::class, 'isFavorited']);
+Route::get('/favorites/blogs', [BlogController::class, 'getFavoriteBlogs']);

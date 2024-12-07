@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
-
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
 {
@@ -76,6 +77,52 @@ class BlogController extends Controller
         // Return the results as JSON
         return response()->json($results);
     }
+
+    public function getFavoriteBlogs($userId = 1)
+    {
+        // Retrieve the user's favorite blogs using Query Builder
+        $favoriteBlogs = DB::table('blog_user')
+            ->join('blogs', 'blog_user.blog_id', '=', 'blogs.id') // Assuming the blogs table has an 'id' column
+            ->where('blog_user.user_id', $userId)
+            ->select('blogs.*') // Select the desired columns from the blogs table
+            ->get();
+    
+        return response()->json(['favoriteBlogs' => $favoriteBlogs]);
+    }
+    
+    public function addToFavorite(Request $request, $userId, $blogId)
+    {
+        // Retrieve the user by ID
+        $user = User::findOrFail($userId);
+    
+        // Attach the blog to the user's favorites
+        $user->blog_favorites()->attach($blogId);
+    
+        return response()->json(['message' => 'Blog added to favorites.']);
+    }
+    public function removeFromFavorite(Request $request, $userId, $blogId)
+    {
+        // Retrieve the user by ID
+        $user = User::findOrFail($userId);
+
+        // Detach the blog from the user's favorites
+        $user->blog_favorites()->detach($blogId);
+
+        return response()->json(['message' => 'Blog removed from favorites.']);
+    }
+    public function isFavorited($userId, $blogId)
+    {
+        // Retrieve the user by ID
+        $user = User::findOrFail($userId);
+
+        // Check if the blog is in the user's favorites
+        $isFavorited = $user->blog_favorites()->where('blog_id', $blogId)->exists();
+
+        return response()->json(['isFavorited' => $isFavorited]);
+    }
+
+
+    
 
 
 }
