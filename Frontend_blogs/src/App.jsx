@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import BlogDetails from './components/BlogDetails';
+import Contact from './components/Contact';
+import FavoritePage from './components/FavoritePage';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Landing from './components/landing/landing';
+import GuestLayout from './auth_components/GuestLayout';
+import Login from './auth_components/Login';
+import Signup from './auth_components/Signup';
+import { BrowserRouter, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 
 function App() {
-  const [count, setCount] = useState(0)
+  // Determine the current route
+  const location = useLocation();
+  const hideHeaderFooter = ["/login", "/signup"].includes(location.pathname);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      {/* Conditionally render Header */}
+      {!hideHeaderFooter && <Header />}
+
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/blogdetails" element={<BlogDetails />} />
+        <Route path="/favorite" element={<FavoritePage />} />
+        <Route path="/contact" element={<Contact />} />
+
+       {/* Authentication routes inside GuestLayout */}
+       <Route path="/" element={<GuestLayout />}>
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
+        </Route>
+
+        {/* Redirects */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+
+      {/* Conditionally render Footer */}
+      {!hideHeaderFooter && <Footer />}
+    </div>
+  );
 }
 
-export default App
+export default App;

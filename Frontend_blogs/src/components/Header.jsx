@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { useStateContext } from "../contexts/ContextProvider";
 
 export default function Header() {
+  const { userToken, setUserToken } = useStateContext(); // Use context to access userToken and setUserToken
+
+  const logout = () => {
+    setUserToken(null); // Log out by removing the token from the context and localStorage
+  };
+
   return (
     <>
-
-      {/* search popup start*/}
+      {/* search popup start */}
       <div className="td-search-popup" id="td-search-popup">
         <form action="index.html" className="search-form">
           <div className="form-group">
@@ -20,11 +26,10 @@ export default function Header() {
           </button>
         </form>
       </div>
-      {/* search popup end*/}
+      {/* search popup end */}
       <div className="body-overlay" id="body-overlay" />
       {/* header start */}
       <div className="navbar-area">
-     
         {/* navbar start */}
         <nav className="navbar navbar-expand-lg">
           <div className="container nav-container">
@@ -59,23 +64,36 @@ export default function Header() {
             <div className="collapse navbar-collapse" id="nextpage_main_menu">
               <ul className="navbar-nav menu-open">
                 <li className="current-menu-item">
-                  <Link to='/'>Home </Link>
-                 </li>
-                <li className="current-menu-item">
-                <Link to='/blogdetails'> blog details </Link>
-
+                  <Link to="/">Home</Link>
                 </li>
                 <li className="current-menu-item">
-                 <Link to='/favorite'> Favorite </Link>
+                  <Link to="/blogdetails">Blog Details</Link>
                 </li>
                 <li className="current-menu-item">
-                 <Link to='contact'> Contact  </Link>
-                 </li>
+                  <Link to="/favorite">Favorite</Link>
+                </li>
+                <li className="current-menu-item">
+                  <Link to="/contact">Contact</Link>
+                </li>
                 <li className="current-menu-item">
                   <a target="_blank" href="#">
                     About us
                   </a>
                 </li>
+
+                {/* Conditionally render buttons based on userToken */}
+                {!userToken ? (
+                  <>
+                    <li className="current-menu-item">
+                      <Link to="/login">Login</Link>
+                    </li>
+                   
+                  </>
+                ) : (
+                  <li className="current-menu-item">
+                    <button onClick={logout}>Logout</button>
+                  </li>
+                )}
               </ul>
             </div>
             <div className="nav-right-part nav-right-part-desktop">
