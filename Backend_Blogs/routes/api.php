@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/blogs/{id}/comments', [CommentController::class, 'index']);
 Route::get('/blogs/{id}', [BlogController::class, 'show']);
+Route::get('/search', [BlogController::class, 'search']);
 Route::post('/blogs/{id}/comments', [CommentController::class, 'store']);
 
 Route::controller(HomeController::class)->name('home.')->group(function (){
