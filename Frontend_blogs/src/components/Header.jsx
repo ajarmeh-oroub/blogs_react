@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 export default function Header() {
   return (
     <>
-
       {/* search popup start*/}
       <div className="td-search-popup" id="td-search-popup">
         <form action="index.html" className="search-form">
@@ -78,13 +78,14 @@ export default function Header() {
                 </li>
               </ul>
             </div>
-            <div className="nav-right-part nav-right-part-desktop">
-              <div className="menu-search-inner">
+            <div className="nav-right-part nav-right-part-desktop w-50">
+              {/* <div className="menu-search-inner">
                 <input type="text" placeholder="Search For" />
                 <button type="submit" className="submit-btn">
                   <i className="fa fa-search" />
                 </button>
-              </div>
+              </div> */}
+              <SearchBar/>
             </div>
           </div>
         </nav>
