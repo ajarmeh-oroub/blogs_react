@@ -10,7 +10,8 @@ class HomeController extends Controller
 {
     function index(){
 
-        $blogs['latest'] = Blog::latest()->take(5)->get();
+        $blogs['latest'] = Blog::latest()->take(13)->get();
+        $blogs['first'] = $blogs['latest']->first();
 
         $blogIds = DB::table('blog_user')
             ->select('blog_id', DB::raw('COUNT(*) as user_count'))

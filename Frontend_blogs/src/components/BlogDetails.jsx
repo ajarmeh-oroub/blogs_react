@@ -77,7 +77,7 @@ export default function BlogDetails() {
   if (!blog) {
     return <div className="container">Loading...</div>;
   }
-  
+
 
   return (
     <section className="blog-post-area section-margin">
