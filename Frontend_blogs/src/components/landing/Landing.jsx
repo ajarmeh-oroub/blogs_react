@@ -1,11 +1,8 @@
-import React from 'react'
-import BannerArea from './BannerArea'
-import PostGrid from './PostGrid'
-import PostLatest from './PostLatest'
-import PostTrending from './PostTrending'
+import React from "react";
+import BannerArea from "./BannerArea";
+import PostGrid from "./PostGrid";
+import PostTrending from "./PostTrending";
 import { useEffect, useState } from "react";
-
-
 
 export default function Landing() {
   const [data, setData] = useState(null);
@@ -34,22 +31,28 @@ export default function Landing() {
     fetchData();
   }, []);
 
-
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="preloader" id="preloader">
+        <div className="preloader-inner">
+          <div className="spinner">
+            <div className="dot1"></div>
+            <div className="dot2"></div>
+          </div>
+        </div>
+      </div>
+    );
   if (error) return <div>Error: {error}</div>;
 
   const latest = data.latest.slice(1, 5);
   const grid = data.latest.slice(5, 13);
 
-
-
-
   return (
     <>
-      <BannerArea data={data.latest}/>
-      <PostTrending trends={data.trends} latest={latest}/>
+      <BannerArea data={data.latest} />
+      <PostTrending trends={data.trends} latest={latest} />
       {/* <PostLatest /> */}
-      <PostGrid grid={grid}/>
+      <PostGrid grid={grid} />
     </>
-  )
+  );
 }
