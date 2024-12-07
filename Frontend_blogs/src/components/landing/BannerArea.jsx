@@ -7,17 +7,21 @@ export default function BannerArea({data, loading, error}) {
   const bannerBlogs = data.map(function (blog) {
     return (
       <div className="row" key={blog.id}>
-        <div className="col-lg-6">
+        <div className="col-lg-6 ">
           <div className="thumb after-left-top">
             <img
               src={blog.image}
               alt="img"
-              style={{ height: "400px", width: "900px" }}
+              style={{ height: "400px", width: "900px" ,
+                transform: "translate(20px, 20px)", // Adjust these values to translate the element
+                position: "relative", 
+                borderRadius:"8px"// Ensure it respects the transform
+            }}
             />
           </div>
         </div>
         <div className="col-lg-6 align-self-center">
-          <div className="banner-details mt-4 mt-lg-0">
+          <div className="banner-details mt-4 mt-lg-0 ">
             <div className="post-meta-single">
               <ul>
                 <li>
@@ -33,7 +37,7 @@ export default function BannerArea({data, loading, error}) {
             </div>
             <h2>{blog.title}</h2>
             <p>{blog.article}. </p>
-            <Link to={`/blog/${blog.id}`} className="btn btn-blue">Read More</Link>
+            <Link to={`/blog/${blog.id}`} className="btn btn-base ">Read More</Link>
           </div>
         </div>
       </div>

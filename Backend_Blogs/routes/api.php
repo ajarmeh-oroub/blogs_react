@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -42,3 +43,5 @@ Route::post('/blogs/{id}/comments', [CommentController::class, 'store']);
 Route::controller(HomeController::class)->name('home.')->group(function (){
     Route::get('/home', 'index')->name('index');
 });
+
+Route::post('/contact' , [ContactController::class , 'store']);

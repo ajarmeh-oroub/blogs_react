@@ -130,6 +130,17 @@ export const getBlogs =async()=>{
   }
 }
 
+//save contact form data 
+export const saveContact = async()=>{
+  try{
+const response= await axios.post(`${Api_base_url}contact`);
+return response.data
+  }catch(error){
+    console.log("Error:" , error)
+    return null;
+  }
+}
+
 export default {
   getUserData,
   updateUserData,
