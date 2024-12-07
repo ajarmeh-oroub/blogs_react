@@ -21,6 +21,8 @@ export default function Header() {
               placeholder="Search....."
             />
           </div>
+
+
           <button type="submit" className="submit-btn">
             <i className="fa fa-search" />
           </button>

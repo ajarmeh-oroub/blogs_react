@@ -10,14 +10,31 @@ class Blog extends Model
     use HasFactory;
 
 
-    protected $fillable = ['image', 'title', 'article', 'user_id'];
+    protected $fillable = [
+        'image', 
+        'title', 
+        'article', 
+        'user_Id', 
+        'category_id', 
+        'likes', 
+        'comments_count', 
+        'short_description', 
+        'published_at'
+    ];
+    
+     
+    public function user()
+    {
+        return $this->belongsTo(User::class , 'user_id');
+    }
 
 
     function comments(){
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class ,'blogId');
     }
 
-    function users(){
-        return $this->belongsToMany(User::class);
+
+    function category(){
+        return $this->belongsTo(Category::class);
     }
 }

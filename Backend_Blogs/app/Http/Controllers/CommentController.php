@@ -11,17 +11,37 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $comments = Comment::all(); // جلب جميع التعليقات
-        return response()->json($comments);
-    }
+    public function index($id)
+{
+    $comments = Comment::where('blogId', $id)->orderBy('created_at', 'desc')->get();
+    return response()->json($comments);
+}
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
-        $comment = Comment::create($request->all());
+    public function store(Request $request, $id)
+    {
+        // Set a testing user ID (can be any integer you want to test with)
+        $user = 1;
+    
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'comment' => 'required|string',
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email',
+            'userid' => 'numeric',
+        ]);
+    
+        // Add the blogId and userid to the validated data
+        $validatedData['blogId'] = $id;
+        $validatedData['userid'] = $user;  // Using the testing user ID
+    
+        // Create the comment in the database
+        $comment = Comment::create($validatedData);
+    
+        // Return the comment with a 201 status
         return response()->json($comment, 201);
     }
     

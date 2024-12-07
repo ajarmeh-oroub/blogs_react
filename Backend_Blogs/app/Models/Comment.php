@@ -10,16 +10,16 @@ class Comment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'userid',
-        'blogId',
-        'comment',
-        'name', 
-        'email',
+        'blogId', // يجب أن يكون مطابقًا لاسم الحقل في قاعدة البيانات
+        'comment', // النص الخاص بالتعليق
+        'name',    // اسم المعلق
+        'email',   // البريد الإلكتروني
+         'userid' // المستخدم المرتبط بالتعليق
     ];
 
     public function blog()
 {
-    return $this->belongsTo(Blog::class);
+    return $this->belongsTo(Blog::class , 'blogId');
 }
 
 }
