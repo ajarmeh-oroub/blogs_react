@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ProfileEdit from './ProfileEdit';
 import ProfileCreateBlog from './ProfileCreateBlog';
 import EditBlog from './EditBlog';
+import { Link } from 'react-router-dom';
 
 export default function ProfileIndex() {
   const [isEditing, setIsEditing] = useState(false);
@@ -151,7 +152,7 @@ setErrorBlog(null)
               width: "100%",
               objectFit: "cover",
             }}
-            src={`http://127.0.0.1:8000/storage/${blog.image}`}
+            src={`${blog.image}`}
             alt={blog.title || "Blog Thumbnail"}
           />
         </div>
@@ -176,13 +177,15 @@ setErrorBlog(null)
           <h6 className="title" style={{ fontSize: "1rem" }}>
             <a href="blog-details.html">{blog.title}</a>
           </h6>
-          <p style={{ fontSize: "0.9rem" }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <p style={{ fontSize: "0.9rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", width: "100%" }}>
+  {blog.short_description ? blog.short_description : "There is no description"}
+</p>
 
           {/* Actions */}
           <div className="d-flex">
-            <a className="btn btn-base mt-3" href="blog-details.html">
-              Read more
-            </a>
+          <Link to={`/blog/${blog.id}`} className="btn btn-base mt-3 mx-1 btn-blue px-3">
+    Read More
+  </Link>
             <button
               className="btn btn-base mt-3 mx-1 btn-blue px-3"  // Reduce button padding
               onClick={() => handleBlogEditClick(blog)}

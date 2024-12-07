@@ -16,7 +16,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::with(['users' , 'category'])->get();
+        $blogs = Blog::with(['user' , 'category' , 'comments'])->orderBy('created_at' , 'DESC')->get();
         return response()->json($blogs);
     }
 
@@ -27,30 +27,29 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
- 
+        // Validate the incoming data
         $validated = $request->validate(
             [
-               'user_Id' => 'required|numeric',
-                'title' => 'required|string|max:255',
-             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240', 
+                'user_Id' => 'required|numeric',
+                'title' => 'string|max:255',
+                'image' => 'required|url',  // Change: Validate image as a URL
                 'article' => 'required|string',
-                'category_id'=>'numeric',
+                'category_id' => 'numeric',
+                'short_description'=>'nullable| string'
             ],
             [
                 'title.required' => 'The title field is required.',
-                'image.required' => 'An image is required.',
-                'image.image' => 'The uploaded file must be an image.',
+                'image.required' => 'An image URL is required.',
+                'image.url' => 'The image must be a valid URL.',
                 'article.required' => 'The article field is required.',
             ]
         );
     
         try {
-          
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('uploads/blogs', 'public');
-                $validated['image'] = $imagePath; 
-            }
+            // Assign the image URL to the validated data (no file upload logic needed)
+            $validated['image'] = $request->input('image');  // Using the provided URL
     
+            // Create the blog entry
             $blog = Blog::create($validated);
     
             return response()->json(['message' => 'Blog created successfully', 'blog' => $blog], 201);
@@ -58,6 +57,7 @@ class BlogController extends Controller
             return response()->json(['error' => 'Failed to create blog', 'details' => $e->getMessage()], 500);
         }
     }
+    
     
 
     /**
@@ -85,7 +85,7 @@ class BlogController extends Controller
              'title' => 'string|max:255',
              'article' => 'string',
              'category_id' => 'integer',
-             'image' => 'nullable|string', // Update: Allow image to be a string (path)
+             'image' => 'nullable|url', // Update: Validate the image as a URL
          ]);
      
          // Find the blog by ID
@@ -94,9 +94,9 @@ class BlogController extends Controller
              return response()->json(['message' => 'Blog not found'], 404);
          }
      
-         // If the image path is provided (as a string), update it
+         // If the image URL is provided, update it
          if ($request->has('image')) {
-             $blog->image = $validatedData['image']; // Update the image path
+             $blog->image = $validatedData['image']; // Update the image URL
          }
      
          // Update other fields
@@ -111,6 +111,7 @@ class BlogController extends Controller
              'blog' => $blog
          ]);
      }
+     
      
      
      
@@ -144,7 +145,7 @@ class BlogController extends Controller
 
     public function getBlogUser($id){
 
-        $blogs = Blog::with('users' , 'category')->where('user_id', '=', $id)->get();
+        $blogs = Blog::with('user' , 'category')->where('user_id', '=', $id)->get();
 
         return response()->json($blogs);
 

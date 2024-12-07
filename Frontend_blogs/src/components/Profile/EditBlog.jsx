@@ -9,7 +9,7 @@ export default function EditBlog({ setIsBlogEdit, selectedBlog }) {
     title: selectedBlog?.title || "",
     article: selectedBlog?.article || "",
     category_id: selectedBlog?.category_id || "",
-    image: selectedBlog?.image || "",
+    image: selectedBlog?.image || "", // It will now be a URL
   });
 
   const [categories, setCategories] = useState([]);
@@ -37,45 +37,38 @@ export default function EditBlog({ setIsBlogEdit, selectedBlog }) {
     }));
   };
 
-  const handleFileChange = (files) => {
+  const handleFileChange = (e) => {
+    const files = e.target.files;
     if (files && files[0]) {
+      // Instead of handling file upload, we'll set the image URL here
       const file = files[0];
-      setBlogDetails((prev) => ({
-        ...prev,
-        image: file,
-      }));
-
-      // Optional: Preview image before uploading
       const reader = new FileReader();
-      reader.onload = (e) => {
-        const preview = e.target.result;
-        document.getElementById("imagePreview").src = preview;
+      reader.onload = (event) => {
+        setBlogDetails((prev) => ({
+          ...prev,
+          image: event.target.result, // Store the image URL
+        }));
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // Convert file to URL for preview
     }
   };
 
   const appendToFormData = (formData, data) => {
     Object.keys(data).forEach((key) => {
-      // If 'image' is a File object, append the file to FormData
-      if (key === "image" && data[key] instanceof File) {
+      if (key === "image" && typeof data[key] === "string") {
+        // If 'image' is a string (URL), append it directly
         formData.append(key, data[key]);
-      } else if (key === "image" && typeof data[key] === "string") {
-        // If 'image' is a string (image path), append it as a string
-        formData.append(key, data[key]);
-      } else if (key !== "image") {
-        // For all other fields, append them as usual
+      } else {
         formData.append(key, data[key]);
       }
     });
   };
-  
 
   const handelEdit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    appendToFormData(formData, blogDetails);  // Prepare the form data
-    
+    appendToFormData(formData, blogDetails); // Prepare the form data
+
     try {
       const response = await updateBlog(blogDetails.id, formData); // Make sure the API expects FormData
       if (response) {
@@ -84,11 +77,11 @@ export default function EditBlog({ setIsBlogEdit, selectedBlog }) {
         setError(null);
       }
     } catch (err) {
+      console.error("Error while updating the blog:", err);  // Log error for debugging
       setError(err.message || "Something went wrong");
       setSuccess(null);
     }
   };
-  
 
   return (
     <div className="container py-5">
@@ -147,7 +140,7 @@ export default function EditBlog({ setIsBlogEdit, selectedBlog }) {
                 </select>
               </div>
 
-              {/* Image Upload */}
+              {/* Image URL or File Upload */}
               <div className="form-group">
                 <label htmlFor="image">Image</label>
                 <input
@@ -155,13 +148,13 @@ export default function EditBlog({ setIsBlogEdit, selectedBlog }) {
                   id="image"
                   name="image"
                   className="form-control"
-                  onChange={(e) => handleFileChange(e.target.files)}
+                  onChange={handleFileChange}
                 />
                 {blogDetails.image && (
                   <div className="mt-2">
                     <img
                       id="imagePreview"
-                      src={`http://127.0.0.1:8000/storage/${blogDetails.image}`} // Display existing image if available
+                      src={blogDetails.image} // Display image preview from URL or file
                       alt="Blog"
                       className="img-thumbnail"
                       style={{ maxWidth: "200px", height: "auto" }}

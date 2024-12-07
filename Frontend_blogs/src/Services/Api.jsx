@@ -57,21 +57,21 @@ export const updateBlog = async (id, formData) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    
+    console.log(formData);
     console.log('Response:', response.data);
-    return response.data; // Returning the response data to be used in the calling function
+    return response.data;
   } catch (e) {
-    // Handling different error types
+ 
     if (e.response) {
-      // Server responded with a status other than 2xx
+   
       console.error('Error occurred:', e.response.data);
       return { error: e.response.data };
     } else if (e.request) {
-      // No response was received
+   
       console.error('No response received:', e.request);
       return { error: 'No response from server' };
     } else {
-      // General errors (e.g., malformed request)
+ 
       console.error('Error occurred:', e.message);
       return { error: e.message };
     }
