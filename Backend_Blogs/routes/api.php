@@ -5,6 +5,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +34,11 @@ Route::delete('blog/{id}/delete' , [BlogController::class , 'destroy']);
 
 Route::get('/categories' , [CategoryController::class , 'index']);
 
+
+Route::get('/blogs/{id}/comments', [CommentController::class, 'index']);
+Route::get('/blogs/{id}', [BlogController::class, 'show']);
+Route::post('/blogs/{id}/comments', [CommentController::class, 'store']);
+
+Route::controller(HomeController::class)->name('home.')->group(function (){
+    Route::get('/home', 'index')->name('index');
+});

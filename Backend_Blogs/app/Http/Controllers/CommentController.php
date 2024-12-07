@@ -11,17 +11,32 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $comments = Comment::all(); // جلب جميع التعليقات
-        return response()->json($comments);
-    }
+    public function index($id)
+{
+    $comments = Comment::where('blogId', $id)->orderBy('created_at', 'desc')->get();
+    return response()->json($comments);
+}
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
-        $comment = Comment::create($request->all());
+    public function store(Request $request, $id)
+    {
+        // التحقق من صحة البيانات
+        $validatedData = $request->validate([
+            'comment' => 'required|string',
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email',
+            
+        ]);
+
+        // إضافة blogId إلى البيانات
+        $validatedData['blogId'] = $id;
+
+        // إنشاء التعليق
+        $comment = Comment::create($validatedData);
+
         return response()->json($comment, 201);
     }
     
